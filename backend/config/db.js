@@ -10,6 +10,9 @@ const pool = new Pool({
   ssl: {
     rejectUnauthorized: false,
   },
-});
+  ssl: process.env.NODE_ENV === 'production'
+    ? { rejectUnauthorized: true }
+    : { rejectUnauthorized: false },
+ });
 
 export default pool;
