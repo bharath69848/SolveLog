@@ -41,13 +41,17 @@ export default function Auth() {
         return;
       }
 
-      // Store token if login/register successful
-      if (data.token) {
+      if (isLogin) {
+        if (!data.token) {
+            setError('Login succeeded but no token was returned.');
+            return;
+        }
         localStorage.setItem('token', data.token);
+        navigate('/dashboard');
+      } else {
+        navigate('/login');
       }
 
-      // Navigate to dashboard
-      navigate('/dashboard');
     } catch (err) {
       setError('Network error. Please try again.');
       console.error(err);
