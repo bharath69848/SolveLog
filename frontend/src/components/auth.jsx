@@ -9,10 +9,12 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
 
     if (!username || !password) {
       setError('Please fill in all fields');
@@ -49,7 +51,15 @@ export default function Auth() {
         localStorage.setItem('token', data.token);
         navigate('/dashboard');
       } else {
-        navigate('/login');
+        // Show success message for registration
+        setSuccess('Hero created successfully! Redirecting to login...');
+        setUsername('');
+        setPassword('');
+
+        // Redirect to login page after 2 seconds
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
       }
 
     } catch (err) {
@@ -81,13 +91,16 @@ export default function Auth() {
           {/* Error Message */}
           {error && <div className="error-message">{error}</div>}
 
+          {/* Success Message */}
+          {success && <div className="success-message">{success}</div>}
+
           {/* Username Field */}
           <div className="form-group">
-            <label className="form-label">HERO NAME (EMAIL)</label>
+            <label className="form-label">HERO NAME (USERNAME)</label>
             <input
               type="text"
               className="form-input"
-              placeholder="hero@guild.com"
+              placeholder="hero_username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               disabled={loading}
