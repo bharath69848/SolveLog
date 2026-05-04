@@ -1,5 +1,6 @@
 import express from 'express'
 import authRoutes from "./routes/authRoutes.js"
+import problemRoutes from "./routes/problemRoutes.js"
 import cors from "cors"
 
 const app = express();
@@ -9,6 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/auth/", authRoutes);
+app.use("/api/problems/", problemRoutes);
 
 app.listen(PORT,() => {
   console.log("Server Running on Port:",PORT);
